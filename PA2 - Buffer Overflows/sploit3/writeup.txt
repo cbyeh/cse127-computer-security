@@ -1,0 +1,23 @@
+The vulernability in target3 is memcpy as there is no bounds check.
+However, because there is a check before the call to memcpy, we had
+to find a way to bypass it. Noticing the there is a signed integer
+comparison in the if statement before the call to memcpy, we figured 
+that we could find some big number greater than the max int size
+that would help us bypass the check. We knew that overflowing the
+max int would give us a negative integer, so we calculated that
+if we added 915 (the buffer size in foo + 2) to the max int size,
+we would have a negative number that first, passes the check to
+get us to memcpy(), and then when this big negative value is multiplied
+to the size of the widget which is 64 bytes, the number overflows again and
+we get the positive number 58496 which is the size that we will chose to be 
+our exploit string. This would allow us to overflow the buffer in foo by 64 bytes.
+Now that we can now overflow the buffer in foo and the eip, we used
+gdb to specifically find where the address of eip is, and calculated
+where to put the address to our NOP sled in our string such that 
+eip will be overwritten with this address to our NOP sled leading
+to our shellcode. Therefore, our exploit string consisted of NOPs,
+and then our shellcode right before where we found our buffer overflows 
+eip as we placed the address to NOP sled in those 4 bytes and left the
+remaining indices in our string to be NOPs. We chose our exploit string/buffer
+to be of size 914 * sizeof(widget) which is one more widget size greater to
+give us enough bytes for overflowing.

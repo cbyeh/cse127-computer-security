@@ -1,0 +1,5 @@
+[server]
+base_url = "https://gradinator.spinda.net"
+
+[assignment]
+id = "pa2_sploit1"

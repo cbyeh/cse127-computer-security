@@ -1,0 +1,7 @@
+The vulnerability in target1 was the function bar which calls strcpy().
+strcpy() does not have a bounds check so how the exploit works is passing
+a string that overflows the buffer perfectly up to the eip or instruction
+pointer. We found that we needed to make the exploit string +16 bytes compared to
+the buffer in foo() to perfectly overwrite the eip with our address to
+our NOP sled which leads to our shellcode. The exploit string consisted of
+NOPs, shellcode, and then an address for the eip to go back to the NOPs

@@ -1,0 +1,56 @@
+wcb212@c09-30:~$ nc smtp.cse.127 25
+220 ridl.cse.127 ESMTP Postfix (Ubuntu)
+HELO smtp.cse.127
+250 ridl.cse.127
+MAIL FROM: <savage@cse.127>
+250 2.1.0 Ok
+RCPT TO: <amirian@cse.127>
+250 2.1.5 Ok
+DATA
+354 End data with <CR><LF>.<CR><LF>
+FROM: <savage@cse.127>
+TO: <amirian@cse.127>
+Date: Thu, 28 May 2020 11:21:26 -0700
+Reply-to: <wcb212@c09-30.sysnet.ucsd.edu>
+
+Hi Ariana, what was my password reset token?
+
+
+Stefan
+.
+250 2.0.0 Ok: queued as 95D0380705
+QUIT
+221 2.0.0 Bye
+^C
+You have new mail in /var/mail/wcb212
+
+From amirian@cse.127  Thu May 28 12:18:39 2020
+Return-Path: <amirian@cse.127>
+X-Original-To: wcb212@c09-30.sysnet.ucsd.edu
+Delivered-To: wcb212@c09-30.sysnet.ucsd.edu
+Received: from [127.0.0.1] (localhost [IPv6:::1])
+        by foreshadow.cse.127 (Postfix) with ESMTP id D46EE463196
+        for <wcb212@c09-30.sysnet.ucsd.edu>; Thu, 28 May 2020 12:18:39 -0700 (PDT)
+From: Ariana Mirian <amirian@cse.127>
+Subject: password reset token
+To: <savage@cse.127>
+Message-Id: <20200528191839.D46EE463196@foreshadow.cse.127>
+Date: Thu, 28 May 2020 12:18:39 -0700 (PDT)
+
+I've lost count of how many times I've needed to reset this for you...
+I put the reset token in a file on my machine, and I spun up a quick webserver running if you want to wget it or whatever.
+my IP address is 192.168.1.62, the webserver is running on port uh... something in the 9000 range, I don't remember.
+
+seriously though you need to figure this out, one of the students might break in and hack something if you're not careful
+
+Ariana M.
+
+ps also just to confirm, for the pa5 turnin A on gradescope, they need to submit the protocol transcript they used to send the email, right?
+like the raw text request/responses between them and the server
+
+
+Original Message:
+> Hi Ariana, what was my password reset token?
+> 
+> 
+> Stefan

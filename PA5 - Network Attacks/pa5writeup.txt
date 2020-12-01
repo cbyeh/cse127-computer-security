@@ -1,0 +1,7 @@
+First in the dropped drive we noticed a hidden folder titled .ssh which looked promising. Inside we found the address of the secret network and a public key, which we were able to ssh into with. 
+
+In the network we ran `tcpdump -D` to find the network interfaces, and noticed activity on eno2. Running `tcpdump -i -X` we were able to intercept communication between Stefan Savage and his army of TAs.  
+
+Information revealed included email addresses, in which we used netcat, `nc smtp.cse.127 25` to spoof an email, in which we received information from from Ariana that she would put the token on a webserver, and the IP it was running on, and that it was a port on in the 9000 range. 
+
+Using nmap, `nmap -i 9000-9100 192.168.1.62` we could see it was running on port 9079. That's all we need to get the token, with command `wget -r 192.168.1.62:9079`

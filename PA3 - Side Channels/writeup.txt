@@ -1,0 +1,38 @@
+References used: Discussion slides
+
+memhack:
+--------
+
+The vulnerability in memhack is that the program is exploiting
+unmapped/protected memory to predict what the password is. When the program
+is checking the password one character at a time, we place the current
+char that we are guessing a byte before the unmapped memory so if we guessed the
+right character, we will move the the next byte of memory which is unmapped and
+we will get a seg/page fault. We also redirect where the program will jump to on
+each seg/page fault to store our correct guess of that char and repeat the process for
+the next character. Therefore, we create a temporary buffer that stores our
+current correct guesses and we iterate through each possible character the
+password could be and repeat this process for each character in the password. Once
+we have the final correct password, the check password function will pass and
+we will stop guessing more characters and we can hack the system. 
+
+
+timehack:
+---------
+The vulnerability in timehack is the delays in the password checker between
+each character. With this knowledge, for each position for the password, 
+we can loop through each possible character and for each character, run several 
+trials recording how long it took the check password function to run before it
+reached an incorrect password. Out of all the possible characters for that
+position, we will take the character that had the largest median time out of
+all the trials we took for each character and we will use that character as
+our guess as this indicates the guess was correct because the check
+password function took longer as it was checking the next index. We then store
+this median time in a temporary array to help with backtracking.  When we are
+at some position > 0, we compare the current max median we just chose to 
+the previous max median of the previous position in our temporary array to 
+verify if the current median we have is greater than the previous maxmedian we
+have chosen. If not, this indicates a possible error and inconsistency, so we
+will our guesses for index i and i - 1 and redo the process for those positions.
+Once we have the final correct password, check password function will pass and
+we will stop guessing more characters and hack the system. 

@@ -1,0 +1,18 @@
+The vulernability in target4 is the double free of pointer to chunk q in the function
+foo(). The basis of this this exploit is to overwrite the memory in the heap
+at the time the double free is called. How we did this was first calculating
+the difference between the chunk pointers p and q which gave us the value of
+512 bytes which we used for our exploit string size. Also, based on the hint
+from discussion slides, we knew in order for this exploit to happen, we had
+to set the LSB of q->s.r to 1 to pass GET_FREEBIT(q) in the double free. Then,
+using gdb, we saw that the address to where our exploit string is in data was being copied
+after the double string was right at where the address of p is right after
+the function obsd_strlcpy copies our exploit string after the second tfree on q 
+was called. Then we set the end of the exploit string ebp+4 which is the 
+address of the return address to our NOP sled down to our shellcode. Lastly, 
+when we are overwriting the data, the data gets corrupted between the two chunks
+of data which corrupts our exploit buffer so we added two bytes that will help
+us jump over that corrupted area to get to our stable NOP sled. We decided to 
+jump 12 bytes just to ensure we are jumping over a decent amount of bytes away
+from the corrupted area. After that, we are now at the NOP sled which will then
+get us to our shellcode to launch our root shell.

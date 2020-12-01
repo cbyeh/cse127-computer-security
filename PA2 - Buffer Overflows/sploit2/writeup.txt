@@ -1,0 +1,15 @@
+The vulnerability in target2 was the for loop in function nstrcpy.
+We noticed that the for loop when from i = 0 to i <= len which would 
+cause the buffer in function bar to overflow by one byte. With this
+information and using gdb, we saw this caused us to overwrite the
+LSB of the ebp (saved frame pointer). After the function nstrcpy()
+returns and esp is move back up to ebp, the eip is where the ebp
+is +4 bytes. Therefore, after using gdb to figure out the address
+of our NOP sled for the program to jump to, we had to figure out
+what byte value to overwrite the LSB of the ebp with such that
+when we add 4 to that address, it will be the address to the NOPs
+of our exploit string. After calculating that, we were able to make
+our exploit string which is exactly 1 byte greater than the buffer
+in function bar. The exploit string consisted of NOPs at the beginning,
+shellcode, the address to the NOP sled, and then our one byte to 
+overflow the ebp with so the eip will then jump to our shellcode.

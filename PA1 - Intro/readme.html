@@ -1,0 +1,59 @@
+
+<!-- saved from url=(0054)https://cseweb.ucsd.edu/classes/sp20/cse127-a/pa1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head><body class="vsc-initialized"><h1 id="assignment-1-20-pts">Programming Assignment 1 <em>(20 pts)</em></h1>
+<h3><strong>Deadline: April 14, 2020 by 12:30:00 PM PDT</strong></h3>
+<p>The goal of this assignment is to become familiar with the setup that will be used for future<br>assignments, such as the use of a virtual machine, as well as the<br>basics of working with gdb.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>To complete this assignment, you will be provided with a VirtualBox VM pre-populated with the<br>assignment files.</p>
+<h3 id="vm-image">VM Image</h3>
+<p>In order to match the environment in which your submission will be graded, all work for this<br>assignment must be done on the VirtualBox VM we provide, named <code>pa1box</code>. You can download the VM<br>image <a href="https://drive.google.com/file/d/1EGyjKSIQgyeSdyDbrIknYvTthBm6iShJ/view?usp=sharing"><strong>here</strong></a>.</p>
+<p>The VM is configured with two users: <code>student</code>, with password <code>hacktheplanet</code>; and <code>root</code>, with<br>password <code>hackallthethings</code>. The VM is configured with SSH on port 2222. Please note that SSH is<br>disabled for <code>root</code>, so you can only SSH in as the <code>student</code> user. You can still log in as <code>root</code><br>using <code>su</code> or by logging into the VM directly.</p>
+<p>To SSH into the VM:</p>
+<pre><code>ssh -p 2222 student@127.0.0.1</code></pre>
+<p>To copy files from your computer to the VM:</p>
+<pre><code>scp -P 2222 -r /path/to/files/ student@127.0.0.1:/home/student</code></pre>
+<p>To copy files from the VM to your computer:</p>
+<pre><code>scp -P 2222 student@127.0.0.1:/path/to/files/ /destination/path</code></pre>
+<h2 id="part-1-using-gdb-10-pts">Using GDB <em>(10 pts)</em></h2>
+<p>Files for this sub-assignment are located in the <code>gdb</code> subdirectory of the <code>student</code> user's home<br>directory in the VM image; that is, <code>/home/student/gdb</code>. SSH into the VM and <code>cd</code> into that<br>directory to begin working on it.</p>
+<p>Inside the <code>gdb</code> directory, you'll find <code>fib.c</code>, a C program demonstrating the Fibonacci sequence; and <br>a <code>Makefile</code>. The first step is to compile <code>fib</code> by running <code>make</code> on the command line.</p>
+<p>To run the <code>fib</code> executable in GDB, run <code>gdb fib</code>.<br>I recommend the following workflow in GDB:</p>
+<ol>
+<li><p><strong>Starting.</strong> Set breakpoints that you can later use for analysis:</p>
+<ul>
+<li><code>b foo</code> — break at function <code>foo</code><br></li>
+<li><code>b *0x08048489</code> — break at the instruction at address 0x08048489<br></li>
+<li><code>r</code> — run the executable<br></li>
+</ul></li>
+<li><p><strong>Analyzing.</strong> Examine memory, registers, etc; disassemble code; show stack frames, backtrace,<br> etc; and more:</p>
+<ul>
+<li><code>disas foo</code> — disassemble function <code>foo</code><br></li>
+<li><code>i r</code> — view registers<br></li>
+<li><code>where</code> — view stack frames<br></li>
+<li><code>x &lt;loc&gt;</code> — examine memory<br></li>
+<li><code>x $eip</code> — examine current instruction pointer<br></li>
+<li><code>x /10x $esp</code> — examine 10 words at top of stack<br></li>
+<li><code>x /10x buf</code> — examine 10 words in <code>buf</code><br></li>
+<li><code>x /10i $eip</code> — examine 10 instructions starting at instruction pointer<br></li>
+<li><code>x /10i foo</code> — examine 10 instructions starting at <code>foo</code><br></li>
+</ul></li>
+<li><p><strong>Continuing.</strong> Continue analysis:</p>
+<ul>
+<li><code>c</code> — continue execution until next breakpoint/watchpoint<br></li>
+<li><code>si</code> — step to the next instruction<br></li>
+<li><code>s</code> — step to the next line of source code</li>
+</ul></li>
+</ol>
+<p>Note that this is only a cursory overview of GDB; much more info is available from online<br>resources.</p>
+<h3 id="assignment-instructions">Assignment Instructions</h3>
+<p>Play with <code>gdb fib</code> to complete the following exercises.</p>
+<ol>
+<li>What is the value, in hex, of the <code>ecx</code> register when the function <code>f</code> is called for the first time?<em>(4 pts)</em><br></li>
+<li>Which register stores the value of the variable <code>i</code> in function main (before <code>f</code> is called)? <em>(4 pts)</em><br></li>
+<li>What is the address, in hex, of the function <code>f</code>? <em>(4 pts)</em><br></li>
+<li>What is the name of the 6th instruction of the function <code>f</code>? <em>(4 pts)</em><br></li>
+<li>When <code>f</code> completes after being called from <code>main</code>, to which address in <code>main</code> does control<br> return? Write your answer in hex form. <em>(4 pts)</em></li>
+</ol>
+<h3 id="submission">Submission</h3>
+<p>Fill your answers to the above questions on <a href="https://www.gradescope.com/courses/101066"><em>Gradescope</em></a> assignment <code>PA1</code>. Strictly follow the format of sample answers given there.</p>
+</body></html>
